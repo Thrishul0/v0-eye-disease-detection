@@ -1,17 +1,27 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { GeistSans } from "geist/font/sans"
-import { GeistMono } from "geist/font/mono"
+import { Geist as GeistSans, Geist_Mono as GeistMono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
+import { Toaster } from "@/components/ui/toaster"
 import { Suspense } from "react"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "EyeDetect AI - Advanced Eye Disease Detection",
-  description:
-    "Professional eye disease detection using multi-stage deep learning approach with OCT2017 and retinal datasets",
+  title: "v0 App",
+  description: "Created with v0",
   generator: "v0.app",
 }
+
+const geistSans = GeistSans({
+  subsets: ["latin"],
+  variable: "--font-geist-sans",
+  display: "swap",
+})
+const geistMono = GeistMono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
+  display: "swap",
+})
 
 export default function RootLayout({
   children,
@@ -19,10 +29,13 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable} antialiased`}>
-        <Suspense fallback={null}>{children}</Suspense>
-        <Analytics />
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`font-sans`}>
+        <Suspense fallback={null}>
+          {children}
+          <Analytics />
+          <Toaster />
+        </Suspense>
       </body>
     </html>
   )
